@@ -35,7 +35,9 @@ func main() {
 	}
 	elves = append(elves, sum)
 	sort.Ints(elves)
-
+	//first
+	fmt.Println(elves[len(elves)-1])
+	//second
 	fmt.Println(elves[len(elves)-1] + elves[len(elves)-2] + elves[len(elves)-3])
 
 }
