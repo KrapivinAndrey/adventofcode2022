@@ -1,33 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
 	"strings"
 )
-
-func read() []string {
-
-	var result []string
-	f, err := os.Open("input.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		s := scanner.Text()
-		result = append(result, s)
-	}
-
-	return result
-
-}
 
 func inArray(element string, arr []string) bool {
 
@@ -91,7 +67,7 @@ func checkLabel(rucksacks []string) string {
 }
 func main() {
 
-	tasks := read()
+	tasks := readInput()
 
 	var sum int
 	for _, rucksack := range tasks {
