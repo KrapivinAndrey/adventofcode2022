@@ -54,4 +54,12 @@ func main() {
 			break
 		}
 	}
+
+	for i := 0; i < len(signal); i++ {
+		part := string([]rune(signal)[i : i+14])
+		if checkDiff(part) {
+			fmt.Println(i + 14)
+			break
+		}
+	}
 }
