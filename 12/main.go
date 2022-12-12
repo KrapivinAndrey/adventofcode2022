@@ -15,10 +15,10 @@ type position struct {
 
 func getPosition(maps []string, x int, y int) byte {
 	letter := maps[y][x]
-	if letter == ("S"[0]) {
-		return "a"[0]
-	} else if letter == ("E"[0]) {
-		return "z"[0]
+	if letter == 'S' {
+		return 'a'
+	} else if letter == 'E' {
+		return 'z'
 	} else {
 		return letter
 	}
@@ -127,13 +127,15 @@ func main() {
 		}
 	}
 
-	fmt.Println(bfs(mountains, start, finish))
+	myPath := bfs(mountains, start, finish)
 
-	minimal := 100000
+	fmt.Println(myPath)
+
+	minimal := myPath
 	for j, layer := range mountains {
 		for i, point := range layer {
 
-			if string(point) == "a" {
+			if point == 'a' {
 				dist := bfs(mountains, position{i, j}, finish)
 				if dist != 0 && dist < minimal {
 					minimal = dist
