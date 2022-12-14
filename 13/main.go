@@ -113,8 +113,9 @@ func less(a, b interface{}) bool {
 func main() {
 
 	var (
-		signal1, signal2 interface{}
-		sum              int
+		signal1, signal2, signal, first, second interface{}
+		mySignals                               []interface{}
+		sum                                     int
 	)
 	i := 0
 	signals := readInput()
@@ -122,13 +123,45 @@ func main() {
 		json.Unmarshal([]byte(signals[i]), &signal1)
 		json.Unmarshal([]byte(signals[i+1]), &signal2)
 
-		fmt.Println(less(signal1, signal2))
-		//if less(signal1, signal2) {
-		//	sum += (i / 3) + 1
-		//}
+		if less(signal1, signal2) {
+			sum += (i / 3) + 1
+		}
 		i += 3
 	}
 
 	fmt.Println(sum)
+
+	// похер, сделаю пызырек поздно уже
+
+	for _, line := range readInput() {
+		if line == "" {
+			continue
+		}
+		json.Unmarshal([]byte(line), &signal)
+		mySignals = append(mySignals, signal)
+	}
+
+	json.Unmarshal([]byte("[[2]]"), &first)
+	mySignals = append(mySignals, first)
+	json.Unmarshal([]byte("[[6]]"), &second)
+	mySignals = append(mySignals, second)
+
+	flag := true
+	for flag {
+		flag = false
+		for i := 0; i < len(mySignals)-1; i++ {
+
+			if !less(mySignals[i], mySignals[i+1]) {
+				mySignals[i], mySignals[i+1] = mySignals[i+1], mySignals[i]
+				flag = true
+			}
+		}
+	}
+
+	for i, elem := range mySignals {
+		if equals(elem, first) || equals(elem, second) {
+			fmt.Println(i + 1)
+		}
+	}
 
 }
