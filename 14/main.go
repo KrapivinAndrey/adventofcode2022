@@ -97,6 +97,41 @@ func main() {
 
 	}
 
-	fmt.Println(cave)
+	// Начинаем сыпать песок
 
+	falling := true
+	units := 0
+
+	for falling {
+
+		sand := Dot{500, 0}
+		units++
+
+		for falling {
+
+			for cave[Dot{sand.x, sand.y + 1}] == 0 {
+				sand.y++
+				if sand.y > bottom {
+					falling = false
+					break
+				}
+			}
+
+			// Проверяем может ли падать дальше
+			if cave[Dot{sand.x - 1, sand.y + 1}] == 0 {
+				sand.x--
+			} else if cave[Dot{sand.x + 1, sand.y + 1}] == 0 {
+				sand.x++
+			} else {
+				cave[sand] = 2
+				break
+			}
+
+		}
+
+	}
+
+	fmt.Println(units - 1)
+
+	//
 }
