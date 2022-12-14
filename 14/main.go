@@ -101,6 +101,10 @@ func main() {
 
 	falling := true
 	units := 0
+	caveCopy := make(map[Dot]int)
+	for k, v := range cave {
+		caveCopy[k] = v
+	}
 
 	for falling {
 
@@ -133,5 +137,57 @@ func main() {
 
 	fmt.Println(units - 1)
 
-	//
+	// бесконечный пол
+
+	falling = true
+	units = 0
+	startDot := Dot{500, 0}
+
+	fmt.Println(units - 1)
+
+	for i := -1000; i < 1000; i++ {
+		caveCopy[Dot{i, bottom + 2}] = 1
+	}
+
+	for falling {
+
+		sand := Dot{500, -10}
+		units++
+		for falling {
+
+			for caveCopy[Dot{sand.x, sand.y + 1}] == 0 {
+				sand.y++
+			}
+
+			// Проверяем может ли падать дальше
+			if caveCopy[Dot{sand.x - 1, sand.y + 1}] == 0 {
+				sand.x--
+			} else if caveCopy[Dot{sand.x + 1, sand.y + 1}] == 0 {
+				sand.x++
+			} else if sand.x == startDot.x && sand.y == startDot.y {
+				falling = false
+				break
+			} else {
+				caveCopy[sand] = 2
+				break
+			}
+
+		}
+
+	}
+
+	fmt.Println(units)
+	for j := 0; j < bottom+3; j++ {
+		for i := 350; i < 650; i++ {
+			switch caveCopy[Dot{i, j}] {
+			case 0:
+				fmt.Print(".")
+			case 1:
+				fmt.Print("#")
+			case 2:
+				fmt.Print("0")
+			}
+		}
+		fmt.Println()
+	}
 }
